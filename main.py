@@ -12,21 +12,26 @@ from flask import Flask, render_template, request
 
 # -- ADDITIONAL SKILLS --
 # JAVASCRIPT FRONTEND, UTILISING JQUERY LIBRARY
-# HTML WEBSITE CONSTRUCTION
-# CSS FRONTEND
+# HTML + CSS FRONTEND WEBSITE CONSTRUCTION
 # FILE MANAGEMENT
 
 app = Flask(__name__)
-
+# name to name_error just incase the player skips the index page
 name = "name_error"
-# Create empty array (list, but im going to call it an array it sounds cooler) for items we're carrying, used in the xC saga
+namecap = "NAME_ERROR"
+
+# Create empty array (list, but im going to call it an array because literally every other language calls it an array) for items we're carrying, used in the xC saga
+# We could use simple boolean for this, but this is simply to expand Python knowledge
 items = []
+
 # Make new global boolean for the things we do (call mum, sleep early, play new game etc.)
 imRude = False
 Tired = False
 newGame = False
 tvSleep = False
 lateNightChips = False
+
+# xC pathway boolean
 
 
 @app.route('/', methods=['GET'])
@@ -42,9 +47,12 @@ def endings():
 @app.route('/story', methods=['GET'])
 def story():
     global name
+    global namecap
     name = request.args.get("playername")
     # Capitalise the first letter of their name
     name = name.capitalize()
+    # Create a fullcaps varient
+    namecap = name.upper()
     return render_template(
         'intro.html',
         NAME=name,
@@ -122,11 +130,25 @@ def mum():
 @app.route('/standforever', methods=['GET'])
 def standforever():
     global name
+    global lateNightChips
+
+    if lateNightChips == True:
+      pageBuffer = 'ENDING-ChipFinder.html'
+    else:
+      pageBuffer = 'ENDING-StandForever.html'
+  
     return render_template(
-        'ENDING-StandForever.html',
+        pageBuffer,
         NAME=name,
     )
 
+@app.route('/standforevermum', methods=['GET'])
+def standforevermum():
+    global name
+    return render_template(
+        'ENDING-StandForeverMum.html',
+        NAME=name,
+    )
 
 @app.route('/berude', methods=['GET'])
 def berude():
@@ -202,6 +224,15 @@ def takeoutchips():
     )
 
 
+@app.route('/bringoutchips', methods=['GET'])
+def bringoutchips():
+    global name
+    return render_template(
+        'ENDING-EnthusiasticTakeOutChips.html',
+        NAME=name,
+    )
+
+
 @app.route('/gamedontknow', methods=['GET'])
 def gamedontknow():
     global name
@@ -264,6 +295,15 @@ def truth():
     global name
     return render_template(
         'ENDING-MadMum.html',
+        NAME=name,
+    )
+
+
+@app.route('/givechipseveryone', methods=['GET'])
+def givechipseveryone():
+    global name
+    return render_template(
+        'ENDING-ChipsGenocide.html',
         NAME=name,
     )
 
@@ -344,6 +384,7 @@ def newgametalk():
 def oldgametalk():
     global name
     global Tired
+    global namecap
 
     if Tired == True:
         pageBuffer = 'ENDING-FSOldGame.html'
@@ -353,8 +394,25 @@ def oldgametalk():
     return render_template(
         pageBuffer,
         NAME=name,
+        NAMECAP=namecap,
     )
 
+
+@app.route('/takeoutdrone', methods=['GET'])
+def takeoutdrone():
+    global name
+    return render_template(
+        'ENDING-TakeOutDrone.html',
+        NAME=name,
+    )
+
+@app.route('/computerinvestigate', methods=['GET'])
+def computerinvestigate():
+    global name
+    return render_template(
+        'ENDING-VistaMum.html',
+        NAME=name,
+    )
 
 #@app.route('/', methods=['GET'])
 #def ():
