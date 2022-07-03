@@ -80,15 +80,6 @@ def startgame():
     )
 
 
-@app.route('/chips', methods=['GET'])
-def chips():
-    global name
-    return render_template(
-        'xC.html',
-        NAME=name,
-    )
-
-
 @app.route('/tv', methods=['GET'])
 def tv():
     global name
@@ -96,25 +87,6 @@ def tv():
         'xTV.html',
         NAME=name,
     )
-
-
-@app.route('/bed', methods=['GET'])
-def bed():
-    global name
-    return render_template(
-        'xC-Bed.html',
-        NAME=name,
-    )
-
-
-@app.route('/cleanteeth', methods=['GET'])
-def cleanteeth():
-    global name
-    return render_template(
-        'xC-Teeth.html',
-        NAME=name,
-    )
-
 
 @app.route('/mum', methods=['GET'])
 def mum():
@@ -414,13 +386,32 @@ def computerinvestigate():
         NAME=name,
     )
 
-#@app.route('/', methods=['GET'])
-#def ():
-#  global name
-#  return render_template(
-#    '.html',
-#    NAME = name,
-#  )
+# xC saga
+
+@app.route('/chips', methods=['GET'])
+def chips():
+    global name
+    return render_template(
+        'xC.html',
+        NAME=name,
+    )
+
+@app.route('/bed', methods=['GET'])
+def bed():
+    global name
+    return render_template(
+        'xC-Bed.html',
+        NAME=name,
+    )
+
+
+@app.route('/cleanteeth', methods=['GET'])
+def cleanteeth():
+    global name
+    return render_template(
+        'xC-Teeth.html',
+        NAME=name,
+    )
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

@@ -31,7 +31,7 @@
       <svg id="fader"></svg> <script>fadeIn();</script>
       <div class="theContaininator6000" style="background-image: url({{ url_for('static', filename='images/image.png') }});">
       <div id="blur">
-      <h1 class="event">ending</h1>
+      <h1 class="event">ending <br> <p class="subending">Ending xx/xx</p></h1>
       <p class="stinfo">explanation</p>
         <div class="endingScreen"> <br style="line-height: 10px;">
           <ul>
