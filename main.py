@@ -413,5 +413,37 @@ def cleanteeth():
         NAME=name,
     )
 
+@app.route('/gowork', methods=['GET'])
+def gowork():
+    global name
+    return render_template(
+        'xC-Work.html',
+        NAME=name,
+    )
+  
+@app.route('/callfriend', methods=['GET'])
+def callfriend():
+    global name
+    return render_template(
+        'xC-Friend.html',
+        NAME=name,
+    )
+
+@app.route('/friendhangup', methods=['GET'])
+def friendhangup():
+    global name
+    return render_template(
+        '',
+        NAME=name,
+    )
+
+@app.route('/friendconvo', methods=['GET'])
+def friendconvo():
+    global name
+    return render_template(
+        'ENDING-FriendConvo.html',
+        NAME=name,
+    )
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
