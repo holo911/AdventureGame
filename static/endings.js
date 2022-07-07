@@ -1,0 +1,1 @@
+const totalEndings = 25; document.getElementById("endingno").innerHTML = totalEndings;

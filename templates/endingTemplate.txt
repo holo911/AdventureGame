@@ -14,6 +14,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
         <script src="{{ url_for('static', filename='fader.js') }}"></script>
         <script src="{{ url_for('static', filename='screencheck.js') }}"></script>
+        <script src="{{ url_for('static', filename='endinginfo.js') }}"></script>
     </head>
     <body id="bg">
       <div class="contentLoader">
@@ -31,7 +32,7 @@
       <svg id="fader"></svg> <script>fadeIn();</script>
       <div class="theContaininator6000" style="background-image: url({{ url_for('static', filename='images/image.png') }});">
       <div id="blur">
-      <h1 class="event">ending <br> <p class="subending">Ending xx/xx</p></h1>
+      <h1 class="event">ending <br> <p class="subending">Ending xx/<span id="endingno"></span></p></h1>
       <p class="stinfo">explanation</p>
         <div class="endingScreen"> <br style="line-height: 10px;">
           <ul>
@@ -42,5 +43,6 @@
         </div>
         </div>
       </div>
+      <script src="{{ url_for('static', filename='endings.js') }}"></script>
     </body>
 </html>

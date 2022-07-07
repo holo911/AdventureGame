@@ -25,14 +25,12 @@ namecap = "NAME_ERROR"
 items = []
 
 # Make new global boolean for the things we do (call mum, sleep early, play new game etc.)
+# xChips saga boolean
 imRude = False
 Tired = False
 newGame = False
 tvSleep = False
 lateNightChips = False
-
-# xC pathway boolean
-
 
 @app.route('/', methods=['GET'])
 def home():
@@ -61,10 +59,11 @@ def story():
 
 @app.route('/storyrestart', methods=['GET'])
 def storyrestart():
-    global name
+    global name, items
     # As the code has not been reloaded, we need to set every variable back to False, while passing name through to restart
-    global imRude, Tired, newGame, tvSleep, lateNightChips
-    imRude = Tired = newGame = tvSleep = lateNightChips = False
+    global imRude, Tired, newGame, tvSleep, lateNightChips, badTeeth1, badTeeth2, isEmail
+    imRude = Tired = newGame = tvSleep = lateNightChips = badTeeth1 = badTeeth2 = isEmail = False
+    items.clear()
     return render_template(
         'intro.html',
         NAME=name,
@@ -386,7 +385,10 @@ def computerinvestigate():
         NAME=name,
     )
 
-# xC saga
+# xC pathway boolean
+badTeeth1 = False
+badTeeth2 = False
+isEmail = False
 
 @app.route('/chips', methods=['GET'])
 def chips():
@@ -399,6 +401,8 @@ def chips():
 @app.route('/bed', methods=['GET'])
 def bed():
     global name
+    global badTeeth1
+    badTeeth1 = True
     return render_template(
         'xC-Bed.html',
         NAME=name,
@@ -408,6 +412,8 @@ def bed():
 @app.route('/cleanteeth', methods=['GET'])
 def cleanteeth():
     global name
+    global badTeeth1
+    badTeeth1 = False
     return render_template(
         'xC-Teeth.html',
         NAME=name,
@@ -433,7 +439,7 @@ def callfriend():
 def friendhangup():
     global name
     return render_template(
-        '',
+        'xC-HomeBridge02.html',
         NAME=name,
     )
 
@@ -445,5 +451,160 @@ def friendconvo():
         NAME=name,
     )
 
+@app.route('/eatchips', methods=['GET'])
+def eatchips():
+    global name
+    global items
+
+    if "chips" in items:
+      pageBuffer = 'ENDING-HomeChips.html'
+    else:
+      pageBuffer = 'xC-NoChips.html'
+  
+    return render_template(
+        pageBuffer,
+        NAME=name,
+    )
+
+@app.route('/vanish', methods=['GET'])
+def vanish():
+    global name
+    return render_template(
+        'ENDING-Vanish.html',
+        NAME=name,
+    )
+
+@app.route('/turnoncomputer', methods=['GET'])
+def turnoncomputer():
+    global name
+    return render_template(
+        'xC-TurnOnPC.html',
+        NAME=name,
+    )
+  
+@app.route('/eatmorechips', methods=['GET'])
+def eatmorechips():
+    global name
+    global badTeeth1
+    global badTeeth2
+
+    if badTeeth1 == True:
+        pageBuffer = 'xC-EatExtraChips.html'
+        badTeeth2 = True
+    else:
+        pageBuffer = 'xC-EatMoreChips.html'
+
+    return render_template(
+        pageBuffer,
+        NAME=name,
+    )
+
+@app.route('/checkemails', methods=['GET'])
+def checkemails():
+    global name
+    return render_template(
+        'xC-TurnOnPC.html',
+        NAME=name,
+    )
+
+@app.route('/eatchipshome', methods=['GET'])
+def eatchipshome():
+    global name
+    global badTeeth1
+    global badTeeth2
+
+    if badTeeth1 and badTeeth2 == True:
+      pageBuffer = 'ENDING-ChipOverload.html'
+    else:
+      pageBuffer = 'xC-EatChips.html'
+      
+    return render_template(
+        pageBuffer,
+        NAME=name,
+    )
+
+@app.route('/embracecheese', methods=['GET'])
+def embracecheese():
+    global name
+    return render_template(
+        'ENDING-EmbraceCheese.html',
+        NAME=name,
+    )
+
+@app.route('/runcheese', methods=['GET'])
+def runcheese():
+    global name
+    return render_template(
+        'ENDING-RunCheese.html',
+        NAME=name,
+    )
+
+@app.route('/cheesesim', methods=['GET'])
+def cheesesim():
+    global name
+    return render_template(
+        'xC-CheeseSim.html',
+        NAME=name,
+    )
+
+@app.route('/emails', methods=['GET'])
+def emails():
+    global name
+    global isEmail
+
+    if isEmail == True:
+      pageBuffer = '/' # Page not yet created
+    else:
+      pageBuffer = 'xC-NoEmails.html'
+    
+    return render_template(
+        pageBuffer,
+        NAME=name,
+    )
+
+@app.route('/doomsupereternal', methods=['GET'])
+def doomsupereternal():
+    global name
+    return render_template(
+        'ENDING-Doom.html',
+        NAME=name,
+    )
+
+@app.route('/closeemails', methods=['GET'])
+def closeemails():
+    global name
+    return render_template(
+        'xC-CloseEmails.html',
+        NAME=name,
+    )
+
+@app.route('/minecraft', methods=['GET'])
+def minecraft():
+    global name
+    return render_template(
+        'ENDING-Minecraft.html',
+        NAME=name,
+    )
+
+@app.route('/fortnite', methods=['GET'])
+def fortnite():
+    global name
+    return render_template(
+        'ENDING-Fortnite.html',
+        NAME=name,
+    )
+
+@app.route('/cheesesimchips', methods=['GET'])
+def cheesesimchips():
+    global name
+    return render_template(
+        'ENDING-CheeseSimChips.html',
+        NAME=name,
+    )
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+  app.run("0.0.0.0", debug=True)
+  
+#if __name__ == "__main__":
+#    from waitress import serve
+#    serve(app, host="0.0.0.0")
