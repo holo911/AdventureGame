@@ -7,11 +7,10 @@ from flask import Flask, render_template, request
 # GLOBAL BOOLEAN AND VARIABLES
 # APP ROUTE DECORATOR
 # PYTHON SYNTAX AND INDENTURE
-# PYTHON LISTS
-# BASIC USAGE OF FLASK LIBRARY
+# BASIC USAGE OF FLASK FRAMEWORK
 
 # -- ADDITIONAL SKILLS --
-# JAVASCRIPT FRONTEND, UTILISING JQUERY LIBRARY
+# JAVASCRIPT FRONTEND, UTILISING JQUERY LIBRARY AND CONDITIONAL CHECKS
 # HTML + CSS FRONTEND WEBSITE CONSTRUCTION
 # FILE MANAGEMENT
 
@@ -21,12 +20,7 @@ name = "name_error"
 namecap = "NAME_ERROR"
 
 # Make new global boolean for the things we do (call mum, sleep early, play new game etc.)
-imRude = False
-Tired = False
-newGame = False
-tvSleep = False
-lateNightChips = False
-
+imRude = Tired = newGame = tvSleep = lateNightChips = False
 
 @app.route('/', methods=['GET'])
 def home():
@@ -40,8 +34,7 @@ def endings():
 
 @app.route('/story', methods=['GET'])
 def story():
-    global name
-    global namecap
+    global name, namecap
     name = request.args.get("playername")
     # Capitalise the first letter of their name
     name = name.capitalize()
@@ -55,9 +48,8 @@ def story():
 
 @app.route('/storyrestart', methods=['GET'])
 def storyrestart():
-    global name
     # As the code has not been reloaded, we need to set every variable back to False, while passing name through to restart
-    global imRude, Tired, newGame, tvSleep, lateNightChips
+    global name, imRude, Tired, newGame, tvSleep, lateNightChips
     imRude = Tired = newGame = tvSleep = lateNightChips = False
     return render_template(
         'intro.html',
@@ -85,8 +77,7 @@ def tv():
 
 @app.route('/mum', methods=['GET'])
 def mum():
-    global name
-    global imRude
+    global name, imRude
     imRude = False  # Resetting to False because of back key messing up variables
     return render_template(
         'xTV-Mum.html',
@@ -96,8 +87,7 @@ def mum():
 
 @app.route('/standforever', methods=['GET'])
 def standforever():
-    global name
-    global lateNightChips
+    global name, lateNightChips
 
     if lateNightChips == True:
         pageBuffer = 'ENDING-ChipFinder.html'
@@ -121,8 +111,7 @@ def standforevermum():
 
 @app.route('/berude', methods=['GET'])
 def berude():
-    global name
-    global imRude
+    global name, imRude
     imRude = True
     return render_template(
         'xTV-Ignore.html',
@@ -132,8 +121,7 @@ def berude():
 
 @app.route('/sleep', methods=['GET'])
 def sleep():
-    global name
-    global Tired
+    global name, Tired
     Tired = False
 
     return render_template(
@@ -144,13 +132,10 @@ def sleep():
 
 @app.route('/chipstv', methods=['GET'])
 def chipstv():
-    global name
-    global Tired
-    global imRude
-    global tvSleep
+    global name, Tired, imRude, tvSleep
     tvSleep = True
 
-    if imRude == True:
+    if imRude:
         Tired = True
         pageBuffer = 'xTV-ChipsDecide.html'
     else:
@@ -164,11 +149,9 @@ def chipstv():
 
 @app.route('/gaming', methods=['GET'])
 def gaming():
-    global name
-    global imRude
-    global Tired
+    global name, imRude, Tired
 
-    if imRude == True:
+    if imRude:
         Tired = True
 
     return render_template(
@@ -179,10 +162,9 @@ def gaming():
 
 @app.route('/takeoutchips', methods=['GET'])
 def takeoutchips():
-    global name
-    global Tired
+    global name, Tired
 
-    if Tired == True:
+    if Tired:
         pageBuffer = 'ENDING-TiredTakeOutChips.html'
     else:
         pageBuffer = 'ENDING-NotTiredTakeOutChips.html'
@@ -204,10 +186,9 @@ def bringoutchips():
 
 @app.route('/gamedontknow', methods=['GET'])
 def gamedontknow():
-    global name
-    global imRude
+    global name, imRude
 
-    if imRude == True:
+    if imRude:
         pageBuffer = 'xTV-PlayOGameFallAsleep.html'
     else:
         pageBuffer = 'xTV-PlayOGameMum.html'
@@ -220,12 +201,10 @@ def gamedontknow():
 
 @app.route('/newgame', methods=['GET'])
 def newgame():
-    global name
-    global imRude
-    global newGame
+    global name, imRude, newGame
     newGame = True
 
-    if imRude == True:
+    if imRude:
         pageBuffer = 'xTV-PlayNGameFallAsleep.html'
     else:
         pageBuffer = 'xTV-PlayNGameMum.html'
@@ -238,12 +217,9 @@ def newgame():
 
 @app.route('/lie', methods=['GET'])
 def lie():
-    global name
-    global imRude
-    global tvSleep
-    global lateNightChips
+    global name, imRude, tvSleep, lateNightChips
 
-    if tvSleep == True and lateNightChips == True:
+    if tvSleep and lateNightChips:
         pageBuffer = 'xTV-Mum-RushTVAte.html'
     else:
         pageBuffer = 'xTV-Mum-RushTV.html'
@@ -274,12 +250,10 @@ def givechipseveryone():
 
 @app.route('/dietician', methods=['GET'])
 def dietician():
-    global name
-    global tvSleep
-    global imRude
+    global name, tvSleep, imRude
     tvSleep = True
 
-    if imRude == True:
+    if imRude:
         pageBuffer = 'xTV-WatchTVChipsFallAsleep.html'
     else:
         pageBuffer = 'xTV-WatchTVChipsMum.html'
@@ -292,14 +266,10 @@ def dietician():
 
 @app.route('/fatty', methods=['GET'])
 def fatty():
-    global name
-    global lateNightChips
-    global imRude
-    global tvSleep
-    lateNightChips = True
-    tvSleep = True
+    global name, lateNightChips, imRude, tvSleep
+    lateNightChips = tvSleep = True
 
-    if imRude == True:
+    if imRude:
         pageBuffer = 'xTV-WatchTVChipsFallAsleepAte.html'
     else:
         pageBuffer = 'xTV-WatchTVChipsMum.html'
@@ -330,10 +300,9 @@ def rush():
 
 @app.route('/newgametalk', methods=['GET'])
 def newgametalk():
-    global name
-    global Tired
+    global name, Tired
 
-    if Tired == True:
+    if Tired:
         pageBuffer = 'ENDING-FSNewGame.html'
     else:
         pageBuffer = 'ENDING-MumNewGame.html'
@@ -346,11 +315,9 @@ def newgametalk():
 
 @app.route('/oldgametalk', methods=['GET'])
 def oldgametalk():
-    global name
-    global Tired
-    global namecap
+    global name, Tired, namecap
 
-    if Tired == True:
+    if Tired:
         pageBuffer = 'ENDING-FSOldGame.html'
     else:
         pageBuffer = 'ENDING-MumOldGame.html'
