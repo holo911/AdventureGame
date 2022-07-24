@@ -20,18 +20,12 @@ app = Flask(__name__)
 name = "name_error"
 namecap = "NAME_ERROR"
 
-# Create empty array (list, but im going to call it an array because literally every other language calls it an array) for items we're carrying, used in the xC saga
-# We could use simple boolean for this, but this is simply to expand Python knowledge
-items = []
-
 # Make new global boolean for the things we do (call mum, sleep early, play new game etc.)
 imRude = False
 Tired = False
 newGame = False
 tvSleep = False
 lateNightChips = False
-
-# xC pathway boolean
 
 
 @app.route('/', methods=['GET'])
@@ -88,6 +82,7 @@ def tv():
         NAME=name,
     )
 
+
 @app.route('/mum', methods=['GET'])
 def mum():
     global name
@@ -105,14 +100,15 @@ def standforever():
     global lateNightChips
 
     if lateNightChips == True:
-      pageBuffer = 'ENDING-ChipFinder.html'
+        pageBuffer = 'ENDING-ChipFinder.html'
     else:
-      pageBuffer = 'ENDING-StandForever.html'
-  
+        pageBuffer = 'ENDING-StandForever.html'
+
     return render_template(
         pageBuffer,
         NAME=name,
     )
+
 
 @app.route('/standforevermum', methods=['GET'])
 def standforevermum():
@@ -121,6 +117,7 @@ def standforevermum():
         'ENDING-StandForeverMum.html',
         NAME=name,
     )
+
 
 @app.route('/berude', methods=['GET'])
 def berude():
@@ -243,18 +240,13 @@ def newgame():
 def lie():
     global name
     global imRude
-    global newGame
     global tvSleep
     global lateNightChips
 
-    if tvSleep == False and newGame == True:
-        pageBuffer = '/'
-    elif tvSleep == False and newGame == False:
-        pageBuffer = '/'
-    elif tvSleep == True and lateNightChips == False:
-        pageBuffer = 'xTV-Mum-RushTV.html'
-    elif tvSleep == True and lateNightChips == True:
+    if tvSleep == True and lateNightChips == True:
         pageBuffer = 'xTV-Mum-RushTVAte.html'
+    else:
+        pageBuffer = 'xTV-Mum-RushTV.html'
 
     return render_template(
         pageBuffer,
@@ -378,6 +370,7 @@ def takeoutdrone():
         NAME=name,
     )
 
+
 @app.route('/computerinvestigate', methods=['GET'])
 def computerinvestigate():
     global name
@@ -386,64 +379,6 @@ def computerinvestigate():
         NAME=name,
     )
 
-# xC saga
-
-@app.route('/chips', methods=['GET'])
-def chips():
-    global name
-    return render_template(
-        'xC.html',
-        NAME=name,
-    )
-
-@app.route('/bed', methods=['GET'])
-def bed():
-    global name
-    return render_template(
-        'xC-Bed.html',
-        NAME=name,
-    )
-
-
-@app.route('/cleanteeth', methods=['GET'])
-def cleanteeth():
-    global name
-    return render_template(
-        'xC-Teeth.html',
-        NAME=name,
-    )
-
-@app.route('/gowork', methods=['GET'])
-def gowork():
-    global name
-    return render_template(
-        'xC-Work.html',
-        NAME=name,
-    )
-  
-@app.route('/callfriend', methods=['GET'])
-def callfriend():
-    global name
-    return render_template(
-        'xC-Friend.html',
-        NAME=name,
-    )
-
-@app.route('/friendhangup', methods=['GET'])
-def friendhangup():
-    global name
-    return render_template(
-        '',
-        NAME=name,
-    )
-
-@app.route('/friendconvo', methods=['GET'])
-def friendconvo():
-    global name
-    return render_template(
-        'ENDING-FriendConvo.html',
-        NAME=name,
-    )
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
