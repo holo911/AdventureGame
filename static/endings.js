@@ -1,1 +1,0 @@
-const totalEndings = 27; document.getElementById("endingno").innerHTML = totalEndings;
