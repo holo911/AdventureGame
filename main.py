@@ -487,12 +487,14 @@ def eatmorechips():
     global name
     global badTeeth1
     global badTeeth2
+    global items
 
     if badTeeth1 == True:
         pageBuffer = 'xC-EatExtraChips.html'
         badTeeth2 = True
     else:
         pageBuffer = 'xC-EatMoreChips.html'
+        items.append("chips")
 
     return render_template(
         pageBuffer,
@@ -599,6 +601,36 @@ def cheesesimchips():
     global name
     return render_template(
         'ENDING-CheeseSimChips.html',
+        NAME=name,
+    )
+
+@app.route('/it', methods=['GET'])
+def it():
+    global name
+    global badTeeth1, badTeeth2
+
+    if badTeeth1 and badTeeth2 == True:
+      pageBuffer = 'ENDING-BadTeethIT.html'
+    else:
+      pageBuffer = 'xC-WorkIT.html'
+      
+    return render_template(
+        pageBuffer,
+        NAME=name,
+    )
+
+@app.route('/weld', methods=['GET'])
+def weld():
+    global name
+    global badTeeth1, badTeeth2
+
+    if badTeeth1 and badTeeth2 == True:
+      pageBuffer = 'ENDING-BadTeethWeld.html'
+    else:
+      pageBuffer = 'xC-WorkWeld.html'
+      
+    return render_template(
+        pageBuffer,
         NAME=name,
     )
 
